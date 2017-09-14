@@ -1,0 +1,8 @@
+# Terraform Ignores
+.terraform
+*.tfstate
+*.tfstate.backup
+*.tfvars
+
+# Vagrant Ignores
+.vagrant
