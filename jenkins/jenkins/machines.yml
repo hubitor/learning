@@ -1,0 +1,11 @@
+---
+- box:
+    vb: "geerlingguy/centos7"
+  name: "jenkins"
+  nics:
+    - type: "private_network"
+      ip_addr: "192.168.99.20"
+  ports:
+    - guest_port: "8080"
+  ram: "1024"
+  vcpu: "1"

@@ -1,0 +1,15 @@
+---
+java_packages:
+  - java-1.8.0-openjdk-devel
+
+jenkins_plugin_timeout: 90
+jenkins_plugins:
+  - greenballs
+  - git
+  - workflow-aggregator
+  - role-strategy
+  - job-dsl
+  - configuration-as-code
+  - configuration-as-code-support
+
+jenkins_casc_config_file: "config/jenkins.yaml"

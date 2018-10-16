@@ -6,3 +6,6 @@
 
 # Vagrant Ignores
 .vagrant
+
+# Ansible file
+**/roles/*
