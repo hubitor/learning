@@ -68,7 +68,7 @@ Vagrant.configure("2") do |config|
     end # config.vm.define
   end # machines.each
 
-  # Provision all ssytems using Ansible
+  # Provision all systems using Ansible
   config.vm.provision 'ansible' do |ansible|
     ansible.compatibility_mode = "2.0"
     ansible.playbook = "provision/playbook.yml"
