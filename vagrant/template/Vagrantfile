@@ -52,13 +52,15 @@ Vagrant.configure("2") do |config|
       end # machine['nics'].each
 
       # Iterate through ports as per settings in machines.yml
-      machine['ports'].each do |port|
-        if port['host_port'] != nil
-          srv.vm.network "forwarded_port", guest: port['guest_port'], host: port['host_port']
-        else
-          srv.vm.network "forwarded_port", guest: port['guest_port'], host: port['guest_port']
-        end # if port['host_port']
-      end # machine['ports'].each
+      if machine['ports'] != nil
+        machine['ports'].each do |port|
+          if port['host_port'] != nil
+            srv.vm.network "forwarded_port", guest: port['guest_port'], host: port['host_port']
+          else
+            srv.vm.network "forwarded_port", guest: port['guest_port'], host: port['guest_port']
+          end # if port['host_port']
+        end # machine['ports'].each
+      end # if machine['ports']
 
       # Configure CPU & RAM per settings in machines.yml (VirtualBox)
       srv.vm.provider 'virtualbox' do |vb|
