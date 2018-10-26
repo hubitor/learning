@@ -1,0 +1,27 @@
+---
+- hosts:
+    - docker
+  become: yes
+  roles:
+    - role: geerlingguy.docker
+  tasks:
+    - name: Ensure override directory exists
+      file:
+        dest: /etc/systemd/system/docker.service.d
+        state: directory
+    - name: Add systemd override file
+      copy:
+        dest: /etc/systemd/system/docker.service.d/startup_options.conf
+        content: |
+          [Service]
+          ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376
+        owner: root
+        group: root
+        mode: 0644
+      notify: Restart Docker
+  handlers:
+    - name: Restart Docker
+      systemd:
+        name: docker
+        state: restarted
+        daemon_reload: true

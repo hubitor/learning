@@ -1,0 +1,11 @@
+---
+- box:
+    vb: "geerlingguy/centos7"
+  name: "docker"
+  nics:
+    - type: "private_network"
+      ip_addr: "192.168.99.99"
+  ports:
+    - guest_port: "2376"
+  ram: "6144"
+  vcpu: "2"

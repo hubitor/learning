@@ -1,0 +1,19 @@
+---
+- hosts:
+    - localhost
+  become: yes
+  vars:
+    docker_service_state: stopped
+    docker_service_enabled: false
+    docker_restart_handler_state: stopped
+  roles:
+    - role: geerlingguy.docker
+  tasks:
+    - name: Set DOCKER_HOST environment variable globally
+      copy:
+        dest: /etc/profile.d/docker.sh
+        content: |
+          export DOCKER_HOST=tcp://127.0.0.1:2376
+        owner: root
+        group: root
+        mode: 0644
