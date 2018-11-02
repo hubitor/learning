@@ -2,6 +2,7 @@ def jobName = 'seed-job'
 def jobDisplayName = 'Jenkins Seed Job'
 def jobDescription = 'This job will load all of the other jobs definitions from the repository.'
 def gitUrl = 'https://github.com/mattandes/learning.git'
+def gitBranch = 'master'
 def dslScriptsTargets = 'jenkins/jenkins-cluster/jobs/**/jobdef.groovy'
 
 job(jobName) {
@@ -17,8 +18,10 @@ job(jobName) {
 	concurrentBuild(false)
     scm {
         git {
-          remote { url(gitUrl) }
-          branches('master')
+          remote { 
+            url(gitUrl)
+          }
+          branch(gitBranch)
           extensions { }  // required as otherwise it may try to tag the repo, which you may not want
         }
     }
