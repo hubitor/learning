@@ -3,7 +3,7 @@ pipelineJob('springboot-gs-rest-service-build') {
   def repo = 'https://github.com/mattandes/springboot-gs-rest-service.git'
 
   triggers {
-    scm('H/5 * * * *')
+    scm('H/1 * * * *')
   }
   description("SpringBoot GS Rest Service Build")
   displayName("SpringBoot GS Rest Service Build")

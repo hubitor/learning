@@ -10,13 +10,17 @@ job(jobName) {
 	keepDependencies(false)
 	disabled(false)
     triggers {
-		scm("H/15 * * * *") {
+		scm("H/1 * * * *") {
 			ignorePostCommitHooks(false)
 		}
 	}
 	concurrentBuild(false)
     scm {
-        git(gitUrl)
+        git {
+          remote { url(gitUrl) }
+          branches('master')
+          extensions { }  // required as otherwise it may try to tag the repo, which you may not want
+        }
     }
 	steps {
 		configure { node ->
