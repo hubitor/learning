@@ -126,6 +126,8 @@ credentials:
 security:
   remotingCLI:
     enabled: false
+  globaljobdslsecurityconfiguration:
+    useScriptSecurity: false
 unclassified:
   location:
     url: "http://localhost:8080/"
