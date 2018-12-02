@@ -1,0 +1,41 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+    # Use the default Vagrant key instead of generating a new one on provisioning
+    config.ssh.insert_key = false
+
+    # Define Window 10 VM that we will run playbooks against
+    config.vm.define "winvm01" do |winvm01|
+      winvm01.vm.provider "virtualbox" do |v|
+        v.memory = 4096
+        v.gui = false
+      end
+
+      # Use the below image as our Windows 10 base image
+      winvm01.vm.box = "ferventcoder/win2012r2-x64-nocm"
+
+      # Define VM's hostname
+      winvm01.vm.hostname = "winvm01"
+
+      # Connection details
+      winvm01.vm.communicator = "winrm"
+      winvm01.winrm.username = "vagrant"
+      winvm01.winrm.password = "vagrant"
+      winvm01.winrm.transport = :plaintext
+      winvm01.vm.guest = :windows
+
+      # Add additional NIC for VM to VM communication
+      winvm01.vm.network "private_network", ip: "192.168.33.22", nic_type: "82540EM"
+
+      # Run Ansible
+      winvm01.vm.provision "ansible" do |ansible|
+        ansible.compatibility_mode = "2.0"
+        ansible.playbook = "provision/playbook.yml"
+        #ansible.galaxy_role_file = "provsion/requirements.yml"
+        ansible.extra_vars = {
+          ansible_winrm_scheme: "http"
+        }
+      end
+    end
+  end

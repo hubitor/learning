@@ -7,6 +7,8 @@ This folder contains files used to work with [Vagrant][1].
 
 **docker:** Contains Vagrant environment for running CentOS 7 VM locally with the Docker daemon exposed so that I can interact with it from Windows Subsystem for Linux.
 
+**ansible-win_nssm-testing:** Contains Vagrant environment for testing pull request for win_nssm Ansible module on a Windows system.
+
 [1]: https://www.vagrantup.com/
 [2]: https://blog.scottlowe.org/
 [3]: https://github.com/scottslowe/learning-tools

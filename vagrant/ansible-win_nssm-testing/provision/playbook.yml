@@ -1,0 +1,36 @@
+---
+- hosts:
+    - all
+  vars:
+    testuser_password: Password1234##
+  tasks:
+    - name: Install NSSM
+      win_chocolatey:
+        name: "nssm"
+
+    - name: Create test user
+      win_user:
+        name: testuser
+        password: "{{ testuser_password }}"
+
+    - name: Create service script
+      win_copy:
+        dest: "C:\\Users\\service.bat"
+        content: |
+          pause
+      notify: Restart TestService
+
+    - name: Install service via NSSM
+      win_nssm:
+        name: TestService
+        application: "C:\\Users\\service.bat"
+        start_mode: auto
+        user: testuser
+        password: "{{ testuser_password }}"
+      notify: Restart TestService
+
+  handlers:
+    - name: Restart TestService
+      win_service:
+        name: TestService
+        state: restarted
