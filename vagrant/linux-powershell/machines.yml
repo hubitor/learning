@@ -1,0 +1,9 @@
+---
+- box:
+    vb: "geerlingguy/centos7"
+  name: "linux-powershell"
+  nics:
+    - type: "private_network"
+      ip_addr: "192.168.99.91"
+  ram: "2048"
+  vcpu: "2"

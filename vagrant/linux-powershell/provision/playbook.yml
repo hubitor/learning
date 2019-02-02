@@ -1,0 +1,6 @@
+---
+- hosts:
+    - linux-powershell
+  become: yes
+  roles:
+    - role: brentwg.powershell
