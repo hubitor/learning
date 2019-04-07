@@ -10,3 +10,6 @@
 # Ansible file
 **/roles/*
 *.retry
+
+# VS Code workspace settings
+.vscode
