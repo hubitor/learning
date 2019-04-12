@@ -16,15 +16,15 @@ module "gke" {
     {
       name               = "default-node-pool"
       machine_type       = "n1-standard-1"
-      min_count          = 1
-      max_count          = 2
+      min_count          = 3
+      max_count          = 3
       disk_size_gb       = 30
       disk_type          = "pd-standard"
       image_type         = "COS"
       auto_repair        = true
       auto_upgrade       = true
       preemptible        = true
-      initial_node_count = 1
+      initial_node_count = 3
     },
   ]
 

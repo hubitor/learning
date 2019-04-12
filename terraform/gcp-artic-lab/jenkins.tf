@@ -26,20 +26,8 @@ resource "helm_release" "jenkins" {
     name = "Master.ServicePort"
     value = "80"
   }
-}
-
-/*data "kubernetes_service" "jenkins" {
-  metadata {
-    name = "${helm_release.jenkins.name}"
-    namespace = "${kubernetes_namespace.jenkins.metadata.0.name}"
+  set {
+    name = "Master.ingress.hostName"
+    value = "jenkins.arctic-lab.mattandes.com"
   }
 }
-
-resource "google_dns_record_set" "jenkins" {
-  name = "jenkins.${google_dns_managed_zone.external.dns_name}"
-  managed_zone = "${google_dns_managed_zone.external.name}"
-  type = "A"
-  ttl  = 300
-
-  rrdatas = ["${data.kubernetes_service.jenkins.load_balancer_ingress.0.ip}"]
-}*/
