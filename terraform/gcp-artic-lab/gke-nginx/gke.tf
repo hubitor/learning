@@ -9,8 +9,9 @@ module "gke" {
   subnetwork                 = "${google_compute_subnetwork.vpc_subnetwork.name}"
   ip_range_pods              = "${google_compute_subnetwork.vpc_subnetwork.secondary_ip_range.0.range_name}"
   ip_range_services          = "${google_compute_subnetwork.vpc_subnetwork.secondary_ip_range.1.range_name}"
-  service_account            = "create"
+  #service_account            = "create"
   remove_default_node_pool   = true
+  http_load_balancing        = false
 
   node_pools = [
     {
@@ -62,5 +63,11 @@ module "gke" {
     default-node-pool = [
       "default-node-pool",
     ]
+  }
+}
+
+resource "null_resource" "kube-creds" {
+  provisioner "local-exec" {
+    command = "gcloud container clusters get-credentials ${module.gke.name} --zone ${var.region}-${var.zone}"
   }
 }

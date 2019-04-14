@@ -1,3 +1,18 @@
+resource "google_service_account" "cm-sa" {
+  account_id   = "cert-manager-${var.project_name}"
+  display_name = "A service account for managing Cloud DNS entries via the cert-manager app."
+}
+
+resource "google_project_iam_member" "cm-dns-admin" {
+  project = "${google_service_account.cm-sa.project}"
+  role    = "roles/dns.admin"
+  member  = "serviceAccount:${google_service_account.cm-sa.email}"
+}
+
+resource "google_service_account_key" "cm_sa_key" {
+  service_account_id = "${google_service_account.cm-sa.name}"
+}
+
 resource "kubernetes_namespace" "cert-manager" {
   metadata {
     name = "cert-manager"
@@ -10,9 +25,13 @@ resource "kubernetes_namespace" "cert-manager" {
   depends_on = ["module.gke"]
 }
 
-resource "null_resource" "kube-creds" {
-  provisioner "local-exec" {
-    command = "gcloud container clusters get-credentials ${module.gke.name}"
+resource "kubernetes_secret" "cm-dns-credentials" {
+  metadata {
+    name      = "cm-dns-credentials"
+    namespace = "${kubernetes_namespace.cert-manager.metadata.0.name}"
+  }
+  data {
+    credentials.json = "${base64decode(google_service_account_key.cm_sa_key.private_key)}"
   }
 }
 
@@ -38,14 +57,18 @@ resource "helm_release" "cert-manager" {
   }
   set {
     name = "ingressShim.defaultACMEChallengeType"
-    value = "http01"
+    value = "dns01"
+  }
+  set {
+    name = "ingressShim.defaultACMEDNS01ChallengeProvider"
+    value = "clouddns"
   }
   depends_on = ["null_resource.cert-manager-prereqs"]
 }
 
 resource "null_resource" "create-issuers" {
   provisioner "local-exec" {
-    command = "kubectl apply -f files/issuers.yaml"
+    command = "kubectl apply -f k8s/cluster-issuers.yaml"
   }
   depends_on = ["helm_release.cert-manager"]
 }

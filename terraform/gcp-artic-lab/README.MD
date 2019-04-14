@@ -51,7 +51,7 @@ terraform init
 Get your credentials for using `kubectl`
 
 ```
-gcloud container clusters get-credentials arctic-lab
+gcloud container clusters get-credentials [gke-nginx or gke-istio]
 ```
 
 Set preferred namespace to work in.

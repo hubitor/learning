@@ -20,7 +20,7 @@ resource "helm_release" "jenkins" {
   }
   set {
     name = "Master.ServiceType"
-    value = "NodePort"
+    value = "ClusterIP"
   }
   set {
     name = "Master.ServicePort"
@@ -28,6 +28,22 @@ resource "helm_release" "jenkins" {
   }
   set {
     name = "Master.ingress.hostName"
-    value = "jenkins.arctic-lab.mattandes.com"
+    value = "jenkins.${var.project_name}.arctic-lab.mattandes.com"
   }
+  set {
+    name = "Master.ingress.path"
+    value = "/"
+  }
+  values = [<<EOF
+Master:
+  ingress:
+    annotations:
+      kubernetes.io/ingress.class: "nginx"
+      kubernetes.io/tls-acme: "true"
+    tls:
+      - secretName: jenkins-tls-cert
+        hosts:
+          - jenkins.${var.project_name}.arctic-lab.mattandes.com
+EOF
+  ]
 }

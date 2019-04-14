@@ -3,7 +3,7 @@ variable "project_id" {
 }
 
 variable "project_name" {
-  default = "arctic-lab"
+  default = "gke-istio"
 }
 
 variable "region" {
@@ -11,7 +11,7 @@ variable "region" {
 }
 
 variable "zone" {
-  default = "c"
+  default = "b"
 }
 
 variable "dns_zone" {

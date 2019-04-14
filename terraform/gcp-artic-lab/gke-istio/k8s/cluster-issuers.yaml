@@ -10,4 +10,11 @@ spec:
     email: user@bogus-domain.com
     privateKeySecretRef:
       name: letsencrypt-staging
-    http01: {}
+    dns01:
+      providers:
+        - name: clouddns
+          clouddns:
+            serviceAccountSecretRef:
+              name: cm-dns-credentials
+              key: credentials.json
+            project: arctic-lab

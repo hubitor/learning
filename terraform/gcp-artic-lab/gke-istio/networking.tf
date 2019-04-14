@@ -1,10 +1,3 @@
-# Create DNS zone
-resource "google_dns_managed_zone" "external" {
-  name = "${var.project_name}"
-  dns_name = "${var.dns_zone}"
-  description = "External DNS zone"
-}
-
 # Create new VPC
 resource "google_compute_network" "vpc" {
   name = "${var.project_name}"

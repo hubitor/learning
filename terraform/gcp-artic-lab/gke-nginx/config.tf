@@ -2,7 +2,7 @@
 terraform {
   backend "gcs" {
     bucket  = "artic-lab-storage"
-    prefix  = "terraform/state"
+    prefix  = "terraform/state/gke-nginx"
     project = "artic-lab"
   }
 }

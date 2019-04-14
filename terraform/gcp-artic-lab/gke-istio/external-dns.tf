@@ -1,5 +1,5 @@
 resource "google_service_account" "dns-sa" {
-  account_id   = "external-dns"
+  account_id   = "external-dns-${var.project_name}"
   display_name = "A service account for managing Cloud DNS entries via the external-dns app."
 }
 
@@ -53,10 +53,17 @@ resource "helm_release" "external-dns" {
   }
   set {
     name = "txtOwnerId"
-    value = "external-dns"
+    value = "external-dns-istio"
   }
   set {
     name = "rbac.create"
     value = true
   }
+  values = [<<EOF
+sources:
+  - service
+  - ingress
+  - istio-gateway
+EOF
+  ]
 }
