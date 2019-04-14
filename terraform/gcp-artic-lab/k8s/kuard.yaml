@@ -44,10 +44,10 @@ metadata:
 spec:
   tls:
   - hosts:
-      - kuard.arctic-lab.mattandes.com
+      - kuard.gke-nginx.arctic-lab.mattandes.com
     secretName: kuard-tls-cert
   rules:
-  - host: kuard.arctic-lab.mattandes.com
+  - host: kuard.gke-nginx.arctic-lab.mattandes.com
     http:
       paths:
       - path: /
