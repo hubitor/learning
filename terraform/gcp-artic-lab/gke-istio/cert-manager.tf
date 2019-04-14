@@ -73,5 +73,5 @@ resource "null_resource" "istio-wildcard" {
   provisioner "local-exec" {
     command = "kubectl apply -f k8s/istio-wildcard-cert.yaml"
   }
-  depends_on = ["null_resource.create-issuers"]
+  depends_on = ["null_resource.create-issuers","null_resource.kube-creds"]
 }
